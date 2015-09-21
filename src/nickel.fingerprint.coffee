@@ -33,7 +33,9 @@ FingerprintProvider = ($q) ->
         loadNext()
         deferred.notify currentChunk * chunkPercentage
       else
-        deferred.resolve spark.end()
+        result = {}
+        result[file.name] = spark.end()
+        deferred.resolve result
     frOnerror = ->
       deferred.reject "ERROR"
     loadNext()
