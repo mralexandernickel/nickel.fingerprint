@@ -22,17 +22,18 @@
       currentChunk = 0;
       spark = new SparkMD5.ArrayBuffer();
       frOnload = function(e) {
+        var result;
         spark.append(e.target.result);
         currentChunk++;
         if (currentChunk < chunks) {
           loadNext();
           return deferred.notify(currentChunk * chunkPercentage);
         } else {
-          return deferred.resolve({
-            filename: file.name({
-              fingerprint: spark.end()
-            })
-          });
+          result = {
+            filename: file.name,
+            fingerprint: spark.end()
+          };
+          return deferred.resolve(result);
         }
       };
       frOnerror = function() {
